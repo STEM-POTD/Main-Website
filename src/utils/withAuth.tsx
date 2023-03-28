@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const withAuth = <T extends object>(Component: NextPage<T>) => {
   const AuthedComponent = (props: T) => {
-    const { data, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
     useEffect(() => {

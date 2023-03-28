@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import { api } from "~/utils/api";
 
 const Leaderboard: NextPage = () => {
@@ -14,6 +15,11 @@ const Leaderboard: NextPage = () => {
 
   return (
     <main className="flex h-screen flex-col items-center">
+      <Head>
+        <title>Leaderboard</title>
+        <meta name="description" content="Leaderboard" />
+      </Head>
+
       <h1 className="m-4 text-center text-3xl font-bold">Leaderboard</h1>
       <table className="h-auto w-1/3 table-fixed text-center">
         <thead className="m-4 p-8">

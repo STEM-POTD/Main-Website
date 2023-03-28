@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "~/utils/Carousel";
 
-const News: NextPage = () => {
+const About: NextPage = () => {
   const newsItems = [
     {
       title: "STEM POTD",
@@ -27,6 +28,10 @@ const News: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>News</title>
+        <meta name="description" content="News" />
+      </Head>
       <section className="flex h-screen flex-col items-center justify-center">
         <h2 className="text-4xl font-bold">Latest News</h2>
         <p>What&apos;s going on?</p>
@@ -69,4 +74,4 @@ const CarouselItem: React.FC<{
   );
 };
 
-export default News;
+export default About;

@@ -1,23 +1,30 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Carousel from "~/utils/Carousel";
 import testimonials from "~/utils/testimonials";
 
 const Team: NextPage = () => {
   return (
-    <section className="flex h-full flex-col items-center justify-center pt-[10%]">
-      <div className="flex flex-col items-center justify-center">
-        <h2 className="text-4xl font-bold">Meet the Team</h2>
-        <p>Our staff</p>
-      </div>
-      <div className="h-full">
-        <Carousel className="h-fit w-1/2 rounded-2xl bg-tan bg-gradient-to-br p-10 drop-shadow-2xl">
-          {testimonials.map((testimonial, index) => (
-            <Testimonial key={index} testimonial={testimonial} />
-          ))}
-        </Carousel>
-      </div>
-    </section>
+    <>
+      <Head>
+        <title>About Us</title>
+        <meta name="description" content="About the Team" />
+      </Head>
+      <section className="flex h-full flex-col items-center justify-center pt-[10%]">
+        <div className="flex flex-col items-center justify-center">
+          <h2 className="text-4xl font-bold">Meet the Team</h2>
+          <p>Our staff</p>
+        </div>
+        <div className="h-full">
+          <Carousel className="h-fit w-1/2 rounded-2xl bg-tan bg-gradient-to-br p-10 drop-shadow-2xl">
+            {testimonials.map((testimonial, index) => (
+              <Testimonial key={index} testimonial={testimonial} />
+            ))}
+          </Carousel>
+        </div>
+      </section>
+    </>
   );
 };
 

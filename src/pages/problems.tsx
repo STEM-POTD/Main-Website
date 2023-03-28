@@ -1,6 +1,7 @@
 import type { Problem } from ".prisma/client";
 import MathJax from "better-react-mathjax/MathJax";
 import type { NextPage } from "next";
+import Head from "next/head";
 import React, { useState } from "react";
 import { z } from "zod";
 import { api } from "~/utils/api";
@@ -21,6 +22,10 @@ const Problems: NextPage = () => {
 
   return (
     <section className="h-screen">
+      <Head>
+        <title>Practice Problems</title>
+        <meta name="description" content="Practice Problems" />
+      </Head>
       <h1 className="m-4 p-4 text-center text-3xl font-bold">
         Practice Problems
       </h1>

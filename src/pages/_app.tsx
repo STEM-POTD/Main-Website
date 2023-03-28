@@ -45,7 +45,7 @@ const HeaderComponent: React.FC = () => {
             News
           </Link>
           <Link className="hover:text-blue-700" id={"team"} href="/team">
-            Team
+            About
           </Link>
           <button
             type="button"

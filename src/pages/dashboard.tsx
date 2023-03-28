@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import { api } from "~/utils/api";
@@ -15,6 +16,11 @@ const Dashboard: NextPage = () => {
 
   return (
     <div>
+      <Head>
+        <title>Dashboard</title>
+        <meta name="description" content="Dashboard" />
+      </Head>
+
       <h1>Dashboard</h1>
       <TeamComponent userId={session.user.id} />
 
