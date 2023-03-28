@@ -18,9 +18,7 @@ const Dashboard: NextPage = () => {
       <h1>Dashboard</h1>
       <TeamComponent userId={session.user.id} />
 
-      <Link href="/problems">
-        Practice
-      </Link>
+      <Link href="/problems">Practice</Link>
     </div>
   );
 };

@@ -16,6 +16,9 @@ export const problemsRouter = createTRPCRouter({
       },
     });
 
-    return problems;
+    return problems
+      .map((problem) => ({ problem, random: Math.random() }))
+      .sort((a, b) => a.random - b.random)
+      .map((item) => item.problem);
   }),
 });

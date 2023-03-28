@@ -1,22 +1,28 @@
 import { type AppType } from "next/app";
+import Link from "next/link";
+import config from "next/config";
+
 import { type Session } from "next-auth";
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
-import Link from "next/link";
+
+import { MathJaxContext } from "better-react-mathjax";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <HeaderComponent />
-      <Component {...pageProps} />
-      <FooterComponent />
-    </SessionProvider>
+    <MathJaxContext version={3} config={config}>
+      <SessionProvider session={session}>
+        <HeaderComponent />
+        <Component {...pageProps} />
+        <FooterComponent />
+      </SessionProvider>
+    </MathJaxContext>
   );
 };
 const HeaderComponent: React.FC = () => {
