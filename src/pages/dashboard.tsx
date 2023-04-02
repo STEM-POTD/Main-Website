@@ -38,7 +38,6 @@ const Dashboard: NextPage = () => {
         </div>
         <div className="col-span-2">
           <ProblemShowcase userId={session.user.id} />
-          <Link href="/problems">Practice</Link>
         </div>
       </section>
     </>
@@ -243,23 +242,25 @@ const ProblemShowcase: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <>
-      <h1 className="text-center font-bold">Recently Solved: </h1>
-
-      {showcase.size > 0 && (
-        <div className="w-1/3">
-        <Carousel>
-            {Array.from(showcase).map(({ id, title, content }) => (
-              <div
-                className="w-full rounded-3xl bg-gradient-to-br from-indigo-500 to-red-400 p-4"
-                key={id}
-              >
-                <h2 className="font-bold">{title}</h2>
-                <MathJax>{content}</MathJax>
-              </div>
-            ))}
-        </Carousel>
-        </div>
-      )}
+      <h1 className="text-center font-bold p-4">Recently Solved: </h1>
+      <div className="flex flex-col items-center space-y-3">
+        {showcase.size > 0 && (
+          <div className="w-2/5">
+            <Carousel>
+              {Array.from(showcase).map(({ id, title, content }) => (
+                <div
+                  className="w-full rounded-3xl bg-gradient-to-br from-indigo-500 to-red-400 p-4"
+                  key={id}
+                >
+                  <h2 className="font-bold">{title}</h2>
+                  <MathJax>{content}</MathJax>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        )}
+        <Link href="/problems">Practice</Link>
+      </div>
     </>
   );
 };
