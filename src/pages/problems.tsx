@@ -99,7 +99,6 @@ const PracticeProblem: React.FC<{
       return;
     }
 
-    console.log("correct");
     setAnsweredState(answerState.CORRECT);
     onCorrect();
   };
@@ -120,6 +119,7 @@ const PracticeProblem: React.FC<{
             id="answer"
             className="block w-full flex-1 rounded-md border-gray-300 text-center focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             autoFocus
+            autoComplete="off"
             disabled={answeredState === answerState.CORRECT}
           />
           <button

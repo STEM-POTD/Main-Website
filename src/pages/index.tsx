@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         </p>
         <Link
           href="/news"
-          className="rounded-full bg-nav-yellow py-4 px-5 font-bold hover:bg-white hover:text-slate-800"
+          className="rounded-full bg-nav-yellow py-4 px-5 font-bold transition-all ease-in-out hover:bg-white hover:text-slate-800"
         >
           Latest News
         </Link>

@@ -1,11 +1,5 @@
 import { z } from "zod";
-import type { TRPCError } from "@trpc/server";
-import type { User } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-
-type ResponseType<T, K> =
-  | { status: "success"; data: T }
-  | { status: "error"; error: K };
 
 export const userRouter = createTRPCRouter({
   allByScore: publicProcedure.query(async ({ ctx }) => {
@@ -24,39 +18,34 @@ export const userRouter = createTRPCRouter({
         problemId: z.string(),
       })
     )
-    .mutation(
-      async ({
-        ctx,
-        input: { problemId },
-      }): Promise<ResponseType<User, TRPCError>> => {
-        const problem = await ctx.prisma.problem.findUniqueOrThrow({
-          where: {
-            id: problemId,
-          },
-        });
+    .mutation(async ({ ctx, input: { problemId } }) => {
+      const problem = await ctx.prisma.problem.findUniqueOrThrow({
+        where: {
+          id: problemId,
+        },
+      });
 
-        const updatedUser = await ctx.prisma.user.update({
-          where: {
-            id: ctx.session.user.id,
-          },
-          data: {
-            solved: {
-              connect: {
-                id: problemId,
-              },
-            },
-            score: {
-              increment: problem.score,
+      const updatedUser = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          solved: {
+            connect: {
+              id: problemId,
             },
           },
-        });
+          score: {
+            increment: problem.score,
+          },
+        },
+      });
 
-        return {
-          data: updatedUser,
-          status: "success",
-        };
-      }
-    ),
+      return {
+        data: updatedUser,
+        status: "success",
+      };
+    }),
 
   byId: publicProcedure
     .input(
@@ -69,8 +58,45 @@ export const userRouter = createTRPCRouter({
         where: {
           id,
         },
+        include: {
+          solved: true,
+        },
       });
 
       return user;
     }),
+
+  updateName: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input: { id, name } }) => {
+      const updatedUser = await ctx.prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+        },
+      });
+
+      return updatedUser;
+    }),
+
+  allSolved: protectedProcedure.query(async ({ ctx }) => {
+    const solved = await ctx.prisma.problem.findMany({
+      where: {
+        solvedBy: {
+          some: {
+            id: ctx.session.user.id,
+          },
+        },
+      },
+    });
+
+    return solved;
+  }),
 });

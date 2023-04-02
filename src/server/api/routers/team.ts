@@ -7,13 +7,18 @@ export const teamRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        name: z.string(),
+        name: z.string().min(1).max(50).nonempty(),
       })
     )
     .mutation(async ({ ctx, input: { name } }) => {
       const team = await ctx.prisma.team.create({
         data: {
           name,
+          members: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
         },
       });
 
@@ -23,7 +28,7 @@ export const teamRouter = createTRPCRouter({
   join: protectedProcedure
     .input(
       z.object({
-        teamId: z.string(),
+        teamId: z.string().cuid(),
       })
     )
     .mutation(async ({ ctx, input: { teamId } }) => {
@@ -40,7 +45,7 @@ export const teamRouter = createTRPCRouter({
         },
       });
 
-      if (isFull._count.members > 2) {
+      if (isFull._count.members > 4) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Team is full",
@@ -66,7 +71,7 @@ export const teamRouter = createTRPCRouter({
   leave: protectedProcedure
     .input(
       z.object({
-        teamId: z.string(),
+        teamId: z.string().cuid(),
       })
     )
     .mutation(async ({ ctx, input: { teamId } }) => {
@@ -127,7 +132,11 @@ export const teamRouter = createTRPCRouter({
         })
         .team({
           include: {
-            members: true,
+            members: {
+              include: {
+                solved: true,
+              },
+            },
           },
         });
 

@@ -1,6 +1,5 @@
 import { type AppType } from "next/app";
 import Link from "next/link";
-import config from "next/config";
 
 import { type Session } from "next-auth";
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
@@ -10,6 +9,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 
 import { MathJaxContext } from "better-react-mathjax";
+import config from "~/utils/MathJaxConfig";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -41,7 +41,7 @@ const HeaderComponent: React.FC = () => {
           <Link className="hover:text-blue-700" id={"home"} href="/">
             Home
           </Link>
-          <Link className="hover:text-blue-700" id={"news"} href="/news">
+          <Link className="hover:text-blue-700" id={"news"} href="/about">
             News
           </Link>
           <Link className="hover:text-blue-700" id={"team"} href="/team">
@@ -52,12 +52,12 @@ const HeaderComponent: React.FC = () => {
             id={"auth"}
             onClick={() => {
               session
-                ? void signOut()
+                ? void signOut({ callbackUrl: "/" })
                 : void signIn("google", { callbackUrl: "/" });
             }}
             className="hover:text-blue-700"
           >
-            {session ? "Sign Out" : "Sign in"}{" "}
+            {session ? "Sign Out" : "Sign In"}{" "}
           </button>
           {/* {!session ? (
             <>

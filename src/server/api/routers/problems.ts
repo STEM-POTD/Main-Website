@@ -1,6 +1,17 @@
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const problemsRouter = createTRPCRouter({
+  all: publicProcedure.query(async ({ ctx }) => {
+    const problems = await ctx.prisma.problem.findMany({
+      orderBy: { id: "asc" },
+      include: {
+        solvedBy: true,
+      },
+    });
+
+    return problems;
+  }),
+
   getProblems: protectedProcedure.query(async ({ ctx }) => {
     // Get all the problems that the user has not solved
     const problems = await ctx.prisma.problem.findMany({
