@@ -134,34 +134,36 @@ const TeamComponent: React.FC<{ userId: string }> = ({ userId }) => {
           </button>
         </div>
       )}
-      <>
-        <div className="flex flex-initial flex-row justify-center">
-          <button
-            type="button"
-            onClick={toggleJoinModal}
-            className="mx-1 rounded-full bg-blue-400 py-2 px-3 transition-opacity ease-in-out hover:opacity-50"
-          >
-            Join Team
-          </button>
-          <button
-            type="button"
-            className="mx-1 rounded-full bg-emerald-400 py-2 px-3 transition-opacity ease-in-out hover:opacity-50"
-            onClick={toggleCreateModal}
-          >
-            Create Team
-          </button>
-        </div>
-        <JoinTeamModal
-          visible={joinModal}
-          userId={userId}
-          toggle={toggleJoinModal}
-        />
-        <CreateTeamModal
-          visible={createModal}
-          userId={userId}
-          toggle={toggleCreateModal}
-        />
-      </>
+      {!team && (
+        <>
+          <div className="flex flex-initial flex-row justify-center">
+            <button
+              type="button"
+              onClick={toggleJoinModal}
+              className="mx-1 rounded-full bg-blue-400 py-2 px-3 transition-opacity ease-in-out hover:opacity-50"
+            >
+              Join Team
+            </button>
+            <button
+              type="button"
+              className="mx-1 rounded-full bg-emerald-400 py-2 px-3 transition-opacity ease-in-out hover:opacity-50"
+              onClick={toggleCreateModal}
+            >
+              Create Team
+            </button>
+          </div>
+          <JoinTeamModal
+            visible={joinModal}
+            userId={userId}
+            toggle={toggleJoinModal}
+          />
+          <CreateTeamModal
+            visible={createModal}
+            userId={userId}
+            toggle={toggleCreateModal}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -242,7 +244,7 @@ const ProblemShowcase: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <>
-      <h1 className="text-center font-bold p-4">Recently Solved: </h1>
+      <h1 className="p-4 text-center font-bold">Recently Solved: </h1>
       <div className="flex flex-col items-center space-y-3">
         {showcase.size > 0 && (
           <div className="w-2/5">
